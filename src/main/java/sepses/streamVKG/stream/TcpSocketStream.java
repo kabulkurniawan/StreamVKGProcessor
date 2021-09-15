@@ -9,6 +9,7 @@ import it.polimi.yasper.core.stream.data.DataStreamImpl;
 
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
 
 public class TcpSocketStream extends DataStreamImpl implements Runnable  {
     private ServerSocket serverSocket;
@@ -37,12 +38,12 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
             System.out.println("Listening at port: " + port);
             clientSocket = serverSocket.accept();
             System.out.println("New client connected");
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String line;
-            while ((line = in.readLine()) != null) {
+          //  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            Scanner sc = new Scanner(clientSocket.getInputStream());
 
+            while (sc.hasNext()) {
                 Model dataModel = ModelFactory.createDefaultModel();
-                dataModel.read(IOUtils.toInputStream(line,"UTF-8"), null, "N3");
+                dataModel.read(IOUtils.toInputStream(sc.next(),"UTF-8"), null, "N3");
                 this.s.put(dataModel.getGraph(), System.currentTimeMillis());
             }
 

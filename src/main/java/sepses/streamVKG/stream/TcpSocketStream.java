@@ -43,6 +43,7 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
 
             while (sc.hasNext()) {
                 Model dataModel = ModelFactory.createDefaultModel();
+                System.out.println(sc.next());
                 dataModel.read(IOUtils.toInputStream(sc.next(),"UTF-8"), null, "N3");
                 this.s.put(dataModel.getGraph(), System.currentTimeMillis());
             }

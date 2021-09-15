@@ -40,6 +40,7 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
+                line.replaceAll("<EOF>","");
                 Model dataModel = ModelFactory.createDefaultModel();
                 dataModel.read(IOUtils.toInputStream(line,"UTF-8"), null, "TURTLE");
                 this.s.put(dataModel.getGraph(), System.currentTimeMillis());

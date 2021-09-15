@@ -39,17 +39,17 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
             System.out.println("Listening at port: " + port);
             clientSocket = serverSocket.accept();
             System.out.println("New client connected");
-          //  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            Scanner sc = new Scanner(clientSocket.getInputStream());
+           BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            //Scanner sc = new Scanner(clientSocket.getInputStream());
 
             ArrayList<String> trip = new ArrayList<String>();
 
-            while (sc.hasNext()) {
+            while (in.readLine()!=null) {
                 Model dataModel = ModelFactory.createDefaultModel();
-               // System.out.println(sc.next());
+                System.out.println(in.readLine());
                 //create triples
 
-                trip.add(sc.next());
+                trip.add(in.readLine());
 
                 if(trip.size()>=3){
                     dataModel.read(IOUtils.toInputStream(trip.get(0)+trip.get(1)+trip.get(2),"UTF-8"), null, "N3");

@@ -9,6 +9,7 @@ import it.polimi.yasper.core.stream.data.DataStreamImpl;
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TcpSocketStream extends DataStreamImpl implements Runnable  {
@@ -41,11 +42,20 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
           //  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             Scanner sc = new Scanner(clientSocket.getInputStream());
 
+            ArrayList<String> trip = new ArrayList<String>();
+
             while (sc.hasNext()) {
                 Model dataModel = ModelFactory.createDefaultModel();
                 System.out.println(sc.next());
-                dataModel.read(IOUtils.toInputStream(sc.next(),"UTF-8"), null, "N3");
-                this.s.put(dataModel.getGraph(), System.currentTimeMillis());
+                //create triples
+
+                trip.add(sc.next());
+
+                if(trip.size()>=3){
+                    dataModel.read(IOUtils.toInputStream(trip.get(0)+trip.get(1)+trip.get(2),"UTF-8"), null, "N3");
+                    this.s.put(dataModel.getGraph(), System.currentTimeMillis());
+                    trip.clear();
+                }
             }
 
         } catch (Exception e) {

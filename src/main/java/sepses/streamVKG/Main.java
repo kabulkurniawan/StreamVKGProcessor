@@ -32,7 +32,7 @@ public class Main {
         ARQ.init();
         EngineConfiguration ec = new EngineConfiguration(csparqlConf);
         SDSConfiguration config = new SDSConfiguration(csparqlConf);
-        PrintWriter wr = createTcpClient(os[0], Integer.parseInt(os[1]));
+
 
 
 
@@ -45,7 +45,7 @@ public class Main {
 
         //create engine per query
        for (int k=0;k<queryFiles.size();k++){
-           QueryRegister qr = new QueryRegister(arrWrs, ec, config, queryDir + queryFiles.get(k), wr);
+           QueryRegister qr = new QueryRegister(arrWrs, ec, config, queryDir + queryFiles.get(k));
            (new Thread(qr)).start();
        }
 

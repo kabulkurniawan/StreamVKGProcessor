@@ -1,6 +1,7 @@
 package sepses.streamVKG.stream;
 
 import it.polimi.sr.rsp.csparql.engine.CSPARQLEngine;
+import it.polimi.sr.rsp.csparql.sysout.GenericResponseSysOutFormatter;
 import it.polimi.yasper.core.engine.config.EngineConfiguration;
 import it.polimi.yasper.core.querying.ContinuousQueryExecution;
 import it.polimi.yasper.core.sds.SDSConfiguration;
@@ -18,14 +19,12 @@ public class QueryRegister  implements Runnable  {
     private CSPARQLEngine sr;
     private SDSConfiguration config;
     private String queryName;
-    private PrintWriter wr;
     private ArrayList<TcpSocketStream> arrWrs;
 
-    public QueryRegister(ArrayList<TcpSocketStream> wrs, EngineConfiguration ec, SDSConfiguration cf, String qn, PrintWriter w) {
+    public QueryRegister(ArrayList<TcpSocketStream> wrs, EngineConfiguration ec, SDSConfiguration cf, String qn) {
          sr = new CSPARQLEngine(0, ec);
          config = cf;
          queryName = qn;
-         wr = w;
          arrWrs = wrs;
     }
 
@@ -38,7 +37,7 @@ public class QueryRegister  implements Runnable  {
             }
 
             ContinuousQueryExecution cqe = sr.register(getQuery(queryName), config);
-            cqe.add(new StreamOutputFormatter("TURTLE", true,wr));
+            cqe.add(new GenericResponseSysOutFormatter("TABLE", true));
         } catch (Exception e) {
             e.printStackTrace();
         }

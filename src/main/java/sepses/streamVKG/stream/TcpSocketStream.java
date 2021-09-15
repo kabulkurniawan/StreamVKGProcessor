@@ -46,7 +46,7 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
 
             while (sc.hasNext()) {
                 Model dataModel = ModelFactory.createDefaultModel();
-                System.out.println(sc.next());
+               // System.out.println(sc.next());
                 //create triples
 
                 trip.add(sc.next());

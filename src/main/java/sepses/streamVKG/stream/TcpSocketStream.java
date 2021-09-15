@@ -42,20 +42,20 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             //Scanner sc = new Scanner(clientSocket.getInputStream());
 
-            ArrayList<String> trip = new ArrayList<String>();
+            //ArrayList<String> trip = new ArrayList<String>();
 
             while (in.readLine()!=null) {
                 Model dataModel = ModelFactory.createDefaultModel();
                 System.out.println(in.readLine());
                 //create triples
 
-                trip.add(in.readLine());
+            //    trip.add(in.readLine());
 
-                if(trip.size()>=3){
-                    dataModel.read(IOUtils.toInputStream(trip.get(0)+trip.get(1)+trip.get(2),"UTF-8"), null, "N3");
+               // if(trip.size()>=3){
+                    dataModel.read(IOUtils.toInputStream(in.readLine(),"UTF-8"), null, "N3");
                     this.s.put(dataModel.getGraph(), System.currentTimeMillis());
-                    trip.clear();
-                }
+              //      trip.clear();
+                //}
             }
 
         } catch (Exception e) {

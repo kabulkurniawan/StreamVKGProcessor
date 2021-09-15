@@ -27,6 +27,9 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
     }
 
 
+    public TcpSocketStream(String stream_uri) {
+        super(stream_uri);
+    }
 
     public void run() {
         try {
@@ -38,7 +41,7 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
             String line;
             while ((line = in.readLine()) != null) {
                 Model dataModel = ModelFactory.createDefaultModel();
-                dataModel.read(IOUtils.toInputStream(line,"UTF-8"), null, "N3");
+                dataModel.read(IOUtils.toInputStream(line,"UTF-8"), null, "TURTLE");
                 this.s.put(dataModel.getGraph(), System.currentTimeMillis());
             }
 

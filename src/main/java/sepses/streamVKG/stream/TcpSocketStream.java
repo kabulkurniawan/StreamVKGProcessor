@@ -47,7 +47,7 @@ public class TcpSocketStream extends DataStreamImpl implements Runnable  {
                 //System.out.println(line);
                 trip.add(line);
                 if(trip.size()>=4) {
-                    System.out.println(trip);
+//                    System.out.println(trip);
                     Model dataModel = ModelFactory.createDefaultModel();
                     dataModel.read(IOUtils.toInputStream(trip.get(0)+" "+trip.get(1)+" "+trip.get(2), "UTF-8"), null, "N3");
                     this.s.put(dataModel.getGraph(), System.currentTimeMillis());
